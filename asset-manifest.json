@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/SkillDisplay/static/css/main.dad11e5f.chunk.css",
-    "main.js": "/SkillDisplay/static/js/main.811c5097.chunk.js",
-    "main.js.map": "/SkillDisplay/static/js/main.811c5097.chunk.js.map",
+    "main.css": "/SkillDisplay/static/css/main.2d2ef68e.chunk.css",
+    "main.js": "/SkillDisplay/static/js/main.330ea6cd.chunk.js",
+    "main.js.map": "/SkillDisplay/static/js/main.330ea6cd.chunk.js.map",
     "runtime~main.js": "/SkillDisplay/static/js/runtime~main.20fadea3.js",
     "runtime~main.js.map": "/SkillDisplay/static/js/runtime~main.20fadea3.js.map",
     "static/js/2.7cddf10a.chunk.js": "/SkillDisplay/static/js/2.7cddf10a.chunk.js",
     "static/js/2.7cddf10a.chunk.js.map": "/SkillDisplay/static/js/2.7cddf10a.chunk.js.map",
     "index.html": "/SkillDisplay/index.html",
-    "precache-manifest.b7b01867e08b889bf3bb71ffa3c67b80.js": "/SkillDisplay/precache-manifest.b7b01867e08b889bf3bb71ffa3c67b80.js",
+    "precache-manifest.c6c751a0d1d976f5df8ef9f5eaab01c0.js": "/SkillDisplay/precache-manifest.c6c751a0d1d976f5df8ef9f5eaab01c0.js",
     "service-worker.js": "/SkillDisplay/service-worker.js",
-    "static/css/main.dad11e5f.chunk.css.map": "/SkillDisplay/static/css/main.dad11e5f.chunk.css.map"
+    "static/css/main.2d2ef68e.chunk.css.map": "/SkillDisplay/static/css/main.2d2ef68e.chunk.css.map"
   }
 }
