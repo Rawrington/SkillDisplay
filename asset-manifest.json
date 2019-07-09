@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/skilldisplay/static/css/main.d40aef55.chunk.css",
+    "main.js": "/skilldisplay/static/js/main.60476c50.chunk.js",
+    "main.js.map": "/skilldisplay/static/js/main.60476c50.chunk.js.map",
+    "runtime~main.js": "/skilldisplay/static/js/runtime~main.f181b48f.js",
+    "runtime~main.js.map": "/skilldisplay/static/js/runtime~main.f181b48f.js.map",
+    "static/js/2.7cddf10a.chunk.js": "/skilldisplay/static/js/2.7cddf10a.chunk.js",
+    "static/js/2.7cddf10a.chunk.js.map": "/skilldisplay/static/js/2.7cddf10a.chunk.js.map",
+    "index.html": "/skilldisplay/index.html",
+    "precache-manifest.7b2e40b76553424624942cc4a4077cd5.js": "/skilldisplay/precache-manifest.7b2e40b76553424624942cc4a4077cd5.js",
+    "service-worker.js": "/skilldisplay/service-worker.js",
+    "static/css/main.d40aef55.chunk.css.map": "/skilldisplay/static/css/main.d40aef55.chunk.css.map"
+  }
+}
