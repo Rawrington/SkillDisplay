@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "332ff82ad0268c5b3445ffdd7a031cbf",
+    "revision": "7f0f1fd1d8b1ed2adcd0b37fc29e84b1",
     "url": "/SkillDisplay/index.html"
   },
   {
-    "revision": "ceb638e4cbf0a8435ca4",
+    "revision": "419b171c21ea3258953f",
     "url": "/SkillDisplay/static/css/main.d40aef55.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/SkillDisplay/static/js/2.7cddf10a.chunk.js"
   },
   {
-    "revision": "ceb638e4cbf0a8435ca4",
-    "url": "/SkillDisplay/static/js/main.2e1acc3f.chunk.js"
+    "revision": "419b171c21ea3258953f",
+    "url": "/SkillDisplay/static/js/main.5483062e.chunk.js"
   },
   {
     "revision": "e4ff8796ac8613602dd0",
