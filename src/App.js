@@ -27,7 +27,6 @@ class App extends React.Component {
 	handleLogEvent(data) {
 		if(data.charID) {
 			this.setState({me: data.charID})
-			console.log(data.charID)
 			return
 		} //the ME data we need
 		
@@ -41,7 +40,7 @@ class App extends React.Component {
 		
 		const action = parseInt(log[4],16)
 		
-		if(action === 7) return //auto-attack
+		if(action <= 8) return //things we don't care about
 		
 		const index = this.state.actionindex
 		

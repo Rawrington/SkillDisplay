@@ -11,8 +11,6 @@ class Action extends React.Component {
 		
 		const actionUrl = "https://xivapi.com/Action/"+props.action_id;
 		
-		console.log(actionUrl)
-		
 		fetch(actionUrl, { mode: 'cors' })
 			.then(response => response.json())
 			.then(data => {this.setState({xivapi_data: data})})

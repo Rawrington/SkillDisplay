@@ -9,8 +9,6 @@ export default function listenActWebSocket(callback) {
 		const obj = JSON.parse(e.data)
 		if(obj.msgtype === 'SendCharName')
 		{
-			console.log(obj.msg.charID)
-			console.log(obj.msg.charName)
 			return callback(obj.msg)
 		}
 		else if(obj.msgtype === 'Chat')
