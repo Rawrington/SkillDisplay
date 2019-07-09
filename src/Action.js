@@ -1,6 +1,31 @@
 import React from 'react'
 import './css/Action.css'
 
+const gcdExceptions = [
+	15997, //standard step
+	15998, //technical step
+	15999, 
+	16000,
+	16001,
+	16002, //step actions
+	16003, //standard finish
+	16004, //technical finish
+	16191, //single standard finish
+	16192, //double standard finish (WHY IS IT LIKE THIS)
+	16193, //single technical finish
+	16194, //double technical finish
+	16195, //triple technical finish
+	16196, //quadruple technical finish
+	7418, //flamethrower
+	16483 //tsubame-gaeshi
+]
+
+const ogcdExceptions = [
+	3559, //bard WM
+	116, //bard AP
+	114 //bard MB
+]
+
 class Action extends React.Component {
 	state = {
 		xivapi_data: []
@@ -16,14 +41,10 @@ class Action extends React.Component {
 			.then(data => {this.setState({xivapi_data: data})})
 	}
 	
-	shouldComponentUpdate() {
-		if (Object.getOwnPropertyNames(this.state.xivapi_data).length === 0) {
-			return false
-		}
-		return true
-	}
-	
 	isGCD() {
+		if(ogcdExceptions.indexOf(this.props.action_id) !== -1) return false
+		if(gcdExceptions.indexOf(this.props.action_id) !== -1) return true
+		
 		return (this.state.xivapi_data.ActionCategory.ID !== 4)
 	}
 	

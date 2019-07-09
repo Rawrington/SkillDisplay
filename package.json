@@ -1,6 +1,6 @@
 {
   "name": "skilldisplay",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "react": "^16.8.6",
@@ -16,7 +16,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "homepage": "https://rawrington.github.io/skilldisplay/",
+  "homepage": "https://rawrington.github.io/SkillDisplay/",
   "browserslist": {
     "production": [
       ">0.2%",

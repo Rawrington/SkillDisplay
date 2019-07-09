@@ -7,21 +7,14 @@ class App extends React.Component {
 	state = {
 		me: 0,
 		actionlist: [],
-		actionindex: 1
+		actionindex: 1,
+		lastAddedTimestamp: ''
 	}
 	
 	constructor(props) {
 		super(props)
 		
 		listenActWebSocket(this.handleLogEvent.bind(this))
-	}
-	
-	addActionToOverlay(action_id) {
-		this.setState((state) => {
-			const actionlist = state.actionlist.concat(action_id);
-		
-			return {actionlist}
-		})
 	}
 	
 	handleLogEvent(data) {
@@ -40,16 +33,18 @@ class App extends React.Component {
 		
 		const action = parseInt(log[4],16)
 		
-		if(action <= 8) return //things we don't care about
+		if(action <= 8) return //things we don't care about i.e. sprint auto-attacks
+		
+		if(this.state.lastAddedTimestamp === log[1]) return //no double aoe stuff
 		
 		const index = this.state.actionindex
 		
-		this.addActionToOverlay({index,action})
-		
 		this.setState((state) => {
 			const actionindex = (state.actionindex >= 32)?1:state.actionindex+1
+			const lastAddedTimestamp = log[1]
+			const actionlist = state.actionlist.concat({index,action});
 			
-			return {actionindex}
+			return {actionindex,lastAddedTimestamp,actionlist}
 		})
 		
 		setTimeout(this.purgeAction.bind(this), 10000)
@@ -66,10 +61,7 @@ class App extends React.Component {
 	render() {
 		let actions = []
 		
-		console.log(this.state.actionlist)
-		
-		for (const id in this.state.actionlist) {
-			const action = this.state.actionlist[id]
+		for (const action of this.state.actionlist) {
 			actions.push(<Action key={action.index} action_id={action.action} />)
 		}
 		
