@@ -1,0 +1,17 @@
+.actions {
+	margin-top: 1em;
+	background: linear-gradient(180deg, 
+        rgba(0,0,0,0) calc(50% - 1px), 
+        rgba(255,255,255,1) calc(50%), 
+        rgba(0,0,0,0) calc(50% + 1px)
+    );
+	height: 3em;
+	
+	position: absolute;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+  	
+	margin: auto;
+}
