@@ -1,7 +1,7 @@
 import React from 'react'
 import './css/Action.css'
 
-const gcdExceptions = [
+const gcdOverrides = new Set([
 	15997, //standard step
 	15998, //technical step
 	15999, 
@@ -18,47 +18,50 @@ const gcdExceptions = [
 	16196, //quadruple technical finish
 	7418, //flamethrower
 	16483 //tsubame-gaeshi
-]
+])
 
-const ogcdExceptions = [
+const ogcdOverrides = new Set([
 	3559, //bard WM
 	116, //bard AP
 	114 //bard MB
-]
+])
 
-class Action extends React.Component {
-	state = {
-		xivapi_data: []
-	}
+export default function Action({ action_id }) {
+	const [apiData, setApiData] = React.useState()
 	
-	constructor(props) {
-		super(props);
-		
-		const actionUrl = "https://xivapi.com/Action/"+props.action_id;
-		
-		fetch(actionUrl, { mode: 'cors' })
-			.then(response => response.json())
-			.then(data => {this.setState({xivapi_data: data})})
-	}
-	
-	isGCD() {
-		if(ogcdExceptions.indexOf(this.props.action_id) !== -1) return false
-		if(gcdExceptions.indexOf(this.props.action_id) !== -1) return true
-		
-		return (this.state.xivapi_data.ActionCategory.ID !== 4)
-	}
-	
-	render() {
-		if(this.state.xivapi_data.Icon) {
-			const classes = this.isGCD()?'action-icon gcd':'action-icon ogcd'
-			const img = "https://xivapi.com"+this.state.xivapi_data.Icon
-			return <img className={classes} src={img} alt='' />
+	React.useEffect(() => {
+		let current = true
+		void (async () => {
+			const data = await (
+				await fetch(`https://xivapi.com/Action/${action_id}`, { mode: 'cors' })
+			).json()
+			if (current) {
+				setApiData(data)
+			}
+		})()
+
+		return () => {
+			current = false
 		}
-		else
-		{
-			return null
-		}
-    }
+	}, [action_id])
+	
+	const isGCD = React.useMemo(
+		() =>
+			gcdOverrides.has(action_id) ||
+			!ogcdOverrides.has(action_id) ||
+			apiData !== undefined && apiData.ActionCategory.ID !== 4,
+		[action_id]
+	)
+	
+	if (apiData === undefined || !apiData.Icon) {
+		return null
+	}
+	
+	return (
+		<img
+			className={isGCD ? 'action-icon gcd' : 'action-icon ogcd'}
+			src={`https://xivapi.com/${apiData.Icon}`}
+			alt={apiData.Name || ''}
+		/>
+	)
 }
-
-export default Action
