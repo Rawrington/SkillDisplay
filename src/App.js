@@ -8,7 +8,8 @@ class App extends React.Component {
 		me: 0,
 		actionlist: [],
 		actionindex: 1,
-		lastAddedTimestamp: ''
+		lastAddedTimestamp: '',
+		lastAddedAction: -1,
 	}
 	
 	constructor(props) {
@@ -35,16 +36,17 @@ class App extends React.Component {
 		
 		if(action <= 8) return //things we don't care about i.e. sprint auto-attacks
 		
-		if(this.state.lastAddedTimestamp === log[1]) return //no double aoe stuff
+		if(this.state.lastAddedTimestamp === log[1] && this.state.lastAddedAction === action) return //no double aoe stuff
 		
 		const index = this.state.actionindex
 		
 		this.setState((state) => {
 			const actionindex = (state.actionindex >= 32)?1:state.actionindex+1
 			const lastAddedTimestamp = log[1]
+			const lastAddedAction = action
 			const actionlist = state.actionlist.concat({index,action});
 			
-			return {actionindex,lastAddedTimestamp,actionlist}
+			return {actionindex,lastAddedTimestamp,lastAddedAction,actionlist}
 		})
 		
 		setTimeout(this.purgeAction.bind(this), 10000)

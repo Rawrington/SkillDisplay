@@ -45,21 +45,13 @@ export default function Action({ action_id }) {
 		}
 	}, [action_id])
 	
-	const isGCD = React.useMemo(
-		() =>
-			gcdOverrides.has(action_id) ||
-			!ogcdOverrides.has(action_id) ||
-			apiData !== undefined && apiData.ActionCategory.ID !== 4,
-		[action_id]
-	)
-	
 	if (apiData === undefined || !apiData.Icon) {
 		return null
 	}
 	
 	return (
 		<img
-			className={isGCD ? 'action-icon gcd' : 'action-icon ogcd'}
+			className={(gcdOverrides.has(action_id) || (!ogcdOverrides.has(action_id) && apiData.ActionCategory.ID !== 4)) ? 'action-icon gcd' : 'action-icon ogcd'}
 			src={`https://xivapi.com/${apiData.Icon}`}
 			alt={apiData.Name || ''}
 		/>
