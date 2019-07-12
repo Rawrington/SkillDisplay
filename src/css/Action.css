@@ -1,25 +1,27 @@
-.action-icon {
-  animation-duration: 10s;
-  animation-name: action-move;
-  animation-timing-function: linear;
-  animation-fill-mode: forwards;
-  position: absolute;
+.action-move {
+	animation-duration: 10s;
+	animation-name: action-move;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+	position: absolute;
 }
 
 .gcd {
 	width: 3rem;
+	vertical-align: top;
 }
 
 .ogcd {
 	width: 2rem;
+	vertical-align: top;
 }
 
 @keyframes action-move {
-  from {
-    transform: translateX(calc(100vw - 3rem));
-  }
+	from {
+		transform: translateX(calc(100vw - 3rem));
+	}
   
-  to {
-    transform: translateX(-3rem);
-  }
+	to {
+		transform: translateX(-3rem);
+	}
 }

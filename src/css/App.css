@@ -1,5 +1,5 @@
 .actions {
-	margin-top: 1em;
+	padding-top: 1rem;
 	background: linear-gradient(180deg, 
 		rgba(0,0,0,0) calc(25% - 1px), 
         rgba(255,255,255,0.5) calc(25%), 
@@ -11,13 +11,13 @@
         rgba(255,255,255,0.5) calc(75%), 
         rgba(0,0,0,0) calc(75% + 1px)
     );
-	height: 3em;
-	
-	position: absolute;
-	top:0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-  	
-	margin: auto;
+	height: 3rem;
+	padding-bottom: 1rem;
+	background-color: rgba(20, 20, 20, 0.3);
+	display: inline-block;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
 }
