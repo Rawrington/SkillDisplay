@@ -1,100 +1,93 @@
-import React from 'react'
-import listenActWebSocket from './ACTWebsocket'
-import './css/App.css'
-import Action from './Action'
-import RotationContainer from './Rotation'
-import ReactDOM from 'react-dom'
+import React from "react"
+import listenToACT from "./ACTListener"
+import "./css/App.css"
+import Action from "./Action"
+import RotationContainer from "./Rotation"
+import ReactDOM from "react-dom"
+
+const handleCodes = new Set(["00", "01", "02", "21", "22", "33"])
 
 export default function App() {
-	// NOTE: unlike class state, useState doesn't do object merging; instead, it directly holds values
 	const [actionList, setActionList] = React.useState([])
 	const [encounterList, setEncounterList] = React.useState([])
 
 	React.useEffect(() => {
-		
-		// These values are only used internally by the handler,
-		// we don't need to notify React that they were updated,
-		// or keep their updates synchronized with actionList updates.
-		//
-		// This means we don't have to keep them in State (or Reducer)!
 		let selfId
-		let lastTimestamp = ''
+		let lastTimestamp = ""
 		let lastAction = -1
-		let currentZone = 'Unknown'
+		let currentZone = "Unknown"
 
-		// we need keys to persist for each push, even if we shorten the array later,
-		// so we store the key with the action; can't just use array index due to CSS
 		let lastKey = 1
 
-		// listenActWebSocket should be changed to return the websocket,
-		// and this effect should return a function that disconnects the websocket
-		//
-		// like "return () => { ws.close() }"
-		let ws = listenActWebSocket((data, code) => {
-			const openNewEncounter = (timestamp) => {
+		let closeFn = listenToACT((...logSplit) => {
+			const openNewEncounter = () => {
 				setEncounterList(encounterList => {
-					if(encounterList[0] && encounterList[0].rotation && encounterList[0].rotation.length <= 0) {
+					if (
+						encounterList[0] &&
+						encounterList[0].rotation &&
+						encounterList[0].rotation.length <= 0
+					) {
 						encounterList.shift()
 					}
-					
+
 					encounterList.unshift({
 						name: currentZone,
 						rotation: []
 					})
-					
-					return encounterList.slice(0,3)
+
+					return encounterList.slice(0, 3)
 				})
 			}
-			
-			if (data.charID) {
-				selfId = data.charID
+
+			if (logSplit.length === 1 && logSplit[0].charID) {
+				selfId = logSplit[0].charID
 				openNewEncounter()
 				return
 			}
-			
-			switch(code) {
-				case '00':
-					const [, , refCode, , message] = data.split('|')
-					if(refCode === '0038' && message === 'end') openNewEncounter()
+
+			const [
+				logCode,
+				logTimestamp,
+				logParameter1,
+				logParameter2,
+				logParameter3
+			] = logSplit
+
+			if (!handleCodes.has(logCode)) return
+
+			switch (logCode) {
+				case "00":
+					if (logParameter1 === "0038" && logParameter3 === "end")
+						openNewEncounter()
 					return
-				case '01':
-					const [, , , zoneName] = data.split('|')
-					currentZone = zoneName
+				case "01":
+					currentZone = logParameter2
 					return
-				case '02':
-					const [, , logCharIdHex] = data.split('|')
-					selfId = parseInt(logCharIdHex, 16)
+				case "02":
+					selfId = parseInt(logParameter1, 16)
 					openNewEncounter()
 					return
-				case '33':
-					const [, , , controlCode] = data.split('|')
-					if(controlCode === '40000012' || controlCode === '40000010') openNewEncounter()
+				case "33":
+					if (logParameter2 === "40000012" || logParameter2 === "40000010")
+						openNewEncounter()
 					return
 				default:
 					break
 			}
-			
-			//if it's not any of these it must be Network(AOE)Ability, the bulk of what we want to handle
 
 			if (selfId === undefined) return
 
-			const [, logTimestamp, logCharIdHex, , logActionIdHex] = data.split('|')
+			if (parseInt(logParameter1, 16) !== selfId) return
 
-			// microoptimization: since selfId updates way less often,
-			// save selfId as data.charID.toString(16), that way you don't need to
-			// parse logCharIdHex every time
-			if (parseInt(logCharIdHex, 16) !== selfId) return
-
-			// we do a mathematical comparison with action though so can't optimize this away
-			const action = parseInt(logActionIdHex, 16)
+			const action = parseInt(logParameter3, 16)
 
 			if (
 				action <= 8 ||
 				(logTimestamp === lastTimestamp && action === lastAction)
 			)
 				return
-				
-			if((Date.now() - Date.parse(lastTimestamp)) > 120000) openNewEncounter()//last action > 120s ago
+
+			if (Date.now() - Date.parse(lastTimestamp) > 120000) openNewEncounter() //last action > 120s ago
 
 			lastTimestamp = logTimestamp
 			lastAction = action
@@ -102,48 +95,55 @@ export default function App() {
 			const key = (lastKey % 256) + 1
 			lastKey = key
 
+			// This is pretty silly but it's the neatest way to handle the updates going
+			// out at the same time, without finding some way to merge the action lists....
 			ReactDOM.unstable_batchedUpdates(() => {
 				setActionList(actionList => actionList.concat({ action, key }))
 				setEncounterList(encounterList => {
-					if(!encounterList[0]) {
+					if (!encounterList[0]) {
 						encounterList[0] = {
 							name: currentZone,
 							rotation: []
 						}
 					}
-				
-					encounterList[0].rotation.push( action )
-				
+
+					encounterList[0].rotation.push(action)
+
 					return encounterList
 				})
 			})
 
-			// This _probably_ should be done as a separate React.useEffect instead,
-			// which runs as an effect whenever the value of actionList changes.
-			// The problem there is, it would have to detect whether the list grew
-			// since the last time it was called, otherwise it'd react (heh) to its own
-			// updates.
-			//
-			// Easier to pair it with the previous set.
 			setTimeout(() => {
 				setActionList(actionList => actionList.slice(1))
 			}, 10000)
 		})
-		
-		return () => { ws.close() }
+
+		return () => {
+			closeFn()
+		}
 	}, [])
 
 	return (
-		<div className='container'>
-			<div className='actions'>
-				{actionList.map(({ action, key }) => (
-					<Action key={key} actionId={action} additionalClasses='action-move' />
+		<>
+			<div className="container">
+				<div className="actions">
+					{actionList.map(({ action, key }) => (
+						<Action
+							key={key}
+							actionId={action}
+							additionalClasses="action-move"
+						/>
+					))}
+				</div>
+				{encounterList.map((encounter, i) => (
+					<RotationContainer
+						key={i}
+						encounterId={i}
+						name={encounter.name}
+						actionList={encounter.rotation}
+					/>
 				))}
 			</div>
-			{encounterList.map((encounter, i) => (
-				<RotationContainer key={i} encounterId={i} name={encounter.name} actionList={encounter.rotation} />
-			))}
-		</div>
+		</>
 	)
 }
-

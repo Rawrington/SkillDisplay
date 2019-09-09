@@ -16,6 +16,16 @@
 	vertical-align: top;
 }
 
+.action-rotation.gcd {
+	margin-left: 1em;
+}
+
+.action-rotation.gcd::before {
+	content: '\25B6'; /* Unicode character for right arrow */
+	font-size: 13px;
+	color: rgba(255, 255, 255, 0.5);
+}
+
 @keyframes action-move {
 	from {
 		transform: translateX(calc(100vw - 3rem));
