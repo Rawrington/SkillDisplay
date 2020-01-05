@@ -3,6 +3,7 @@ import listenToACT from "./ACTListener"
 import "./css/App.css"
 import Action from "./Action"
 import RotationContainer from "./Rotation"
+import OpenerContainer from "./Opener"
 import ReactDOM from "react-dom"
 
 const handleCodes = new Set(["00", "01", "02", "21", "22", "33"])
@@ -10,6 +11,7 @@ const handleCodes = new Set(["00", "01", "02", "21", "22", "33"])
 export default function App() {
 	const [actionList, setActionList] = React.useState([])
 	const [encounterList, setEncounterList] = React.useState([])
+	const [openerActionList, setOpenerActionList] = React.useState([])
 
 	React.useEffect(() => {
 		let selfId
@@ -123,6 +125,11 @@ export default function App() {
 		}
 	}, [])
 
+
+	let saveOpenerFn = (actionList) => {
+		setOpenerActionList([...actionList]);
+	}
+
 	return (
 		<>
 			<div className="container">
@@ -135,12 +142,17 @@ export default function App() {
 						/>
 					))}
 				</div>
+		<OpenerContainer
+			openerActionList={openerActionList}
+			actionList={actionList}
+		/>
 				{encounterList.map((encounter, i) => (
 					<RotationContainer
 						key={i}
 						encounterId={i}
 						name={encounter.name}
 						actionList={encounter.rotation}
+						saveOpenerFn={saveOpenerFn}
 					/>
 				))}
 			</div>
