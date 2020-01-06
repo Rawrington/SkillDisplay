@@ -11,7 +11,9 @@ const handleCodes = new Set(["00", "01", "02", "21", "22", "33"])
 export default function App() {
 	const [actionList, setActionList] = React.useState([])
 	const [encounterList, setEncounterList] = React.useState([])
-	const [openerActionList, setOpenerActionList] = React.useState([])
+	const [openerActionList, setOpenerActionList] = React.useState(
+		JSON.parse(localStorage.getItem("openerActionList")) || []
+	)
 
 	React.useEffect(() => {
 		let selfId
@@ -128,6 +130,19 @@ export default function App() {
 
 	let saveOpenerFn = (actionList) => {
 		setOpenerActionList([...actionList]);
+		localStorage.setItem("openerActionList", JSON.stringify(actionList))
+	}
+
+	let opener
+	if (encounterList[0])
+	{
+		opener = 
+			(
+				<OpenerContainer
+				openerActionList={openerActionList}
+				actionList={encounterList[0].rotation}
+				/>
+			)
 	}
 
 	return (
@@ -142,10 +157,7 @@ export default function App() {
 						/>
 					))}
 				</div>
-		<OpenerContainer
-			openerActionList={openerActionList}
-			actionList={actionList}
-		/>
+				{opener}
 				{encounterList.map((encounter, i) => (
 					<RotationContainer
 						key={i}
