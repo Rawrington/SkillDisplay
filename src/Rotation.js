@@ -38,6 +38,7 @@ function SaveAsOpener({ expanded, actionList, saveOpenerFn }) {
 
 	return (
 		<button
+			className="save-opener-button"
 			onClick={() => {
 				saveOpenerFn(actionList);
 			}}

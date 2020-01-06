@@ -4,13 +4,31 @@ import "./css/Opener.css"
 import Action from "./Action"
 
 export default function OpenerContainer({ openerActionList, actionList }) {
+	const [open, setOpen] = React.useState(true)
+
 	if (openerActionList.length === 0) return null
+	let header = (
+		<button
+			className={open ? "rotation-button expanded" : "rotation-button"}
+			onClick={() => {
+				setOpen(open => !open)
+			}}
+		>
+			Opener
+		</button>
+	)
+
+	if (!open)
+	{
+		return (<> {header} </>)
+	}
 
 	return (
 		<>
-			Opener Reference
+		{header}
+		<h1 class="opener-header">Reference</h1>
 		<OpenerReference openerActionList={openerActionList} />
-		Opener Execution
+		<h1 class="opener-header">Execution</h1>
 		<OpenerExecution openerActionList={openerActionList} actionList={actionList} />
 		</>
 	)

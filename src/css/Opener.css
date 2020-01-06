@@ -1,3 +1,16 @@
+.opener-header {
+	padding: 0.2em;
+	margin: 0;
+	background-color: rgba(100, 100, 100, 0.3);
+	color: rgba(255, 255, 255, 0.5);
+	font-size: 13px;
+	border: 1px solid gray;
+	border-left: 0;
+	border-right: 0;
+	text-align: center;
+	font-weight: normal;
+}
+
 .opener-correct {
 	box-sizing: border-box;
 	border: 3px solid lime;
