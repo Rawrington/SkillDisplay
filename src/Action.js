@@ -17,7 +17,9 @@ const gcdOverrides = new Set([
 	16195, //triple technical finish
 	16196, //quadruple technical finish
 	7418, //flamethrower
-	16483, //tsubame-gaeshi
+	16484, //kaeshi higanbana
+	16485, //kaeshi goken
+	16486, //kaeshi setsugekka
 	2259, //ten
 	18805, 
 	2261, //chi
