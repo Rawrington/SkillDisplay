@@ -38,6 +38,7 @@ const gcdOverrides = new Set([
 	18878,
 	16492, //hyosho ranryu
 	16471, //goka meykakku
+	16491, //goka meykakku (16471 is the PvP version, 16491 is the PvE version)
 	2270, //doton
 	18880,
 	2269, //huton
