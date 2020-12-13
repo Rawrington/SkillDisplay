@@ -67,7 +67,7 @@ export default function Action({ actionId, additionalClasses }) {
 
 		let current = true
 		void (async () => {
-			const data = await (await fetch(`https://xivapi.com/Action/${actionId}?colums=Icon,Name,ActionCategoryTargetID`, {
+			const data = await (await fetch(`https://xivapi.com/Action/${actionId}?columns=Icon,Name,ActionCategoryTargetID`, {
 				mode: "cors"
 			})).json()
 			if (current) {
