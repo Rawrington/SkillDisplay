@@ -53,16 +53,25 @@ const ogcdOverrides = new Set([
 	114 //bard MB
 ])
 
+const actionMap = new Map()
+
 export default function Action({ actionId, additionalClasses }) {
 	const [apiData, setApiData] = React.useState()
 
 	React.useEffect(() => {
+		const mapData = actionMap.get(actionId)
+		if (mapData != null) {
+			setApiData(mapData)
+			return
+		}
+
 		let current = true
 		void (async () => {
-			const data = await (await fetch(`https://xivapi.com/Action/${actionId}`, {
+			const data = await (await fetch(`https://xivapi.com/Action/${actionId}?columns=Icon,Name,ActionCategoryTargetID`, {
 				mode: "cors"
 			})).json()
 			if (current) {
+				actionMap.set(actionId, data)
 				setApiData(data)
 			}
 		})()
@@ -80,7 +89,7 @@ export default function Action({ actionId, additionalClasses }) {
 		<img
 			className={
 				gcdOverrides.has(actionId) ||
-				(!ogcdOverrides.has(actionId) && apiData.ActionCategory.ID !== 4)
+				(!ogcdOverrides.has(actionId) && apiData.ActionCategoryTargetID !== 4)
 					? `gcd ${additionalClasses}`
 					: `ogcd ${additionalClasses}`
 			}
