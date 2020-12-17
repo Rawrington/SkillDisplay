@@ -38,10 +38,6 @@ export default function App() {
 					return encounterList.slice(0, 3)
 				})
 			}
-            
-            const isValidAction = (action) => { //seperate this out to make the condition readable later
-                return ((9 <= action <= 20000) || (100001 <= action <= 100300))
-            }
 
 			if (logSplit.length === 1 && logSplit[0].charID) {
 				selfId = logSplit[0].charID
@@ -86,7 +82,7 @@ export default function App() {
 			const action = parseInt(logParameter3, 16)
 
 			if (
-				isValidAction(action) ||
+				!((9 <= action <= 20000) || (100001 <= action <= 100300)) ||
 				(logTimestamp === lastTimestamp && action === lastAction)
 			)
 				return
