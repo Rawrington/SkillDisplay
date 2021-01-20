@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/SkillDisplay/static/css/main.e0707cc8.chunk.css",
-    "main.js": "/SkillDisplay/static/js/main.3d3f404d.chunk.js",
-    "main.js.map": "/SkillDisplay/static/js/main.3d3f404d.chunk.js.map",
+    "main.js": "/SkillDisplay/static/js/main.5a6b4ae7.chunk.js",
+    "main.js.map": "/SkillDisplay/static/js/main.5a6b4ae7.chunk.js.map",
     "runtime-main.js": "/SkillDisplay/static/js/runtime-main.58acd0bf.js",
     "runtime-main.js.map": "/SkillDisplay/static/js/runtime-main.58acd0bf.js.map",
-    "static/js/2.19c4ef27.chunk.js": "/SkillDisplay/static/js/2.19c4ef27.chunk.js",
-    "static/js/2.19c4ef27.chunk.js.map": "/SkillDisplay/static/js/2.19c4ef27.chunk.js.map",
+    "static/js/2.4d71e7f6.chunk.js": "/SkillDisplay/static/js/2.4d71e7f6.chunk.js",
+    "static/js/2.4d71e7f6.chunk.js.map": "/SkillDisplay/static/js/2.4d71e7f6.chunk.js.map",
     "index.html": "/SkillDisplay/index.html",
     "static/css/main.e0707cc8.chunk.css.map": "/SkillDisplay/static/css/main.e0707cc8.chunk.css.map",
-    "static/js/2.19c4ef27.chunk.js.LICENSE.txt": "/SkillDisplay/static/js/2.19c4ef27.chunk.js.LICENSE.txt"
+    "static/js/2.4d71e7f6.chunk.js.LICENSE.txt": "/SkillDisplay/static/js/2.4d71e7f6.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.58acd0bf.js",
-    "static/js/2.19c4ef27.chunk.js",
+    "static/js/2.4d71e7f6.chunk.js",
     "static/css/main.e0707cc8.chunk.css",
-    "static/js/main.3d3f404d.chunk.js"
+    "static/js/main.5a6b4ae7.chunk.js"
   ]
 }
