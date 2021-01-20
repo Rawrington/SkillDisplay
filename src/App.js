@@ -81,9 +81,10 @@ export default function App() {
 
 			const action = parseInt(logParameter3, 16)
 
-			if (
-				!((9 <= action <= 20000) || (100001 <= action <= 100300)) ||
-				(logTimestamp === lastTimestamp && action === lastAction)
+			if ( //sanity check the tea sis period wig snapped
+				((action < 9 || action > 20000) && //is not a combat action
+                (action < 100001 || action > 100300)) || //and is not a crafting action
+				(logTimestamp === lastTimestamp && action === lastAction) //or this action is a bug/duplicate
 			)
 				return
 
