@@ -30,3 +30,8 @@
 .rotation-button.expanded:after {
 	content: "\25B2";
 }
+
+.save-opener-button {
+	width: 200px;
+	margin: 0 auto;
+}
