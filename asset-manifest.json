@@ -1,20 +1,13 @@
 {
   "files": {
-    "main.css": "/SkillDisplay/static/css/main.e0707cc8.chunk.css",
-    "main.js": "/SkillDisplay/static/js/main.5a6b4ae7.chunk.js",
-    "main.js.map": "/SkillDisplay/static/js/main.5a6b4ae7.chunk.js.map",
-    "runtime-main.js": "/SkillDisplay/static/js/runtime-main.58acd0bf.js",
-    "runtime-main.js.map": "/SkillDisplay/static/js/runtime-main.58acd0bf.js.map",
-    "static/js/2.4d71e7f6.chunk.js": "/SkillDisplay/static/js/2.4d71e7f6.chunk.js",
-    "static/js/2.4d71e7f6.chunk.js.map": "/SkillDisplay/static/js/2.4d71e7f6.chunk.js.map",
+    "main.css": "/SkillDisplay/static/css/main.330c0e6c.css",
+    "main.js": "/SkillDisplay/static/js/main.7740b422.js",
     "index.html": "/SkillDisplay/index.html",
-    "static/css/main.e0707cc8.chunk.css.map": "/SkillDisplay/static/css/main.e0707cc8.chunk.css.map",
-    "static/js/2.4d71e7f6.chunk.js.LICENSE.txt": "/SkillDisplay/static/js/2.4d71e7f6.chunk.js.LICENSE.txt"
+    "main.330c0e6c.css.map": "/SkillDisplay/static/css/main.330c0e6c.css.map",
+    "main.7740b422.js.map": "/SkillDisplay/static/js/main.7740b422.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.58acd0bf.js",
-    "static/js/2.4d71e7f6.chunk.js",
-    "static/css/main.e0707cc8.chunk.css",
-    "static/js/main.5a6b4ae7.chunk.js"
+    "static/css/main.330c0e6c.css",
+    "static/js/main.7740b422.js"
   ]
 }
