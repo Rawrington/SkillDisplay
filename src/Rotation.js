@@ -2,7 +2,7 @@ import React from "react"
 import "./css/Rotation.css"
 import Action from "./Action"
 
-export default function RotationContainer({ encounterId, name, actionList }) {
+export default function RotationContainer({ encounterId, name, actionList, saveOpenerFn }) {
 	const [open, setOpen] = React.useState(false)
 
 	return (
@@ -16,6 +16,7 @@ export default function RotationContainer({ encounterId, name, actionList }) {
 				{encounterId === 0 ? "Current Rotation" : name}
 			</button>
 			<RotationContents expanded={open} actionList={actionList} />
+			<SaveAsOpener expanded={open} actionList={actionList} saveOpenerFn={saveOpenerFn} />
 		</>
 	)
 }
@@ -29,5 +30,20 @@ function RotationContents({ expanded, actionList }) {
 				<Action key={i} actionId={action} additionalClasses="action-rotation" />
 			))}
 		</div>
+	)
+}
+
+function SaveAsOpener({ expanded, actionList, saveOpenerFn }) {
+	if (!expanded) return null
+
+	return (
+		<button
+			className="save-opener-button"
+			onClick={() => {
+				saveOpenerFn(actionList);
+			}}
+		>
+			Save as Opener
+		</button>
 	)
 }
