@@ -53,7 +53,7 @@ const ogcdOverrides = new Set([
 	3559, //bard WM
 	116, //bard AP
 	114, //bard MB
-	3, // Sprint
+	SPRINT_ACTION_ID, // Sprint
 ])
 
 const actionOverrides = new Map([
