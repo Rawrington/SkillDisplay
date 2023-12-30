@@ -1,5 +1,6 @@
 import React from "react"
 import "./css/Action.css"
+import { SPRINT_ACTION_ID } from "./constants"
 
 const gcdOverrides = new Set([
 	15997, //standard step
@@ -21,7 +22,7 @@ const gcdOverrides = new Set([
 	16485, //kaeshi goken
 	16486, //kaeshi setsugekka
 	2259, //ten
-	18805, 
+	18805,
 	2261, //chi
 	18806,
 	2263, //jin
@@ -51,7 +52,22 @@ const gcdOverrides = new Set([
 const ogcdOverrides = new Set([
 	3559, //bard WM
 	116, //bard AP
-	114 //bard MB
+	114, //bard MB
+	3, // Sprint
+])
+
+const actionOverrides = new Map([
+	// Sprint's actual api data has an innaccurate icon.
+	// https://xivapi.com/Action/3?columns=Icon,Name,ActionCategoryTargetID
+	// https://xivapi.com/i/000000/000405.png
+	[
+		SPRINT_ACTION_ID,
+		{
+			ActionCategoryTargetID: 10,
+			Icon: "/i/000000/000104.png",
+			Name: "Sprint",
+		},
+	],
 ])
 
 const actionMap = new Map()
@@ -68,9 +84,15 @@ export default function Action({ actionId, additionalClasses }) {
 
 		let current = true
 		void (async () => {
-			const data = await (await fetch(`https://xivapi.com/Action/${actionId}?columns=Icon,Name,ActionCategoryTargetID`, {
-				mode: "cors"
-			})).json()
+			const localData = actionOverrides.get(actionId)
+			const data =
+				localData ||
+				(await (
+					await fetch(
+						`https://xivapi.com/Action/${actionId}?columns=Icon,Name,ActionCategoryTargetID`,
+						{ mode: "cors" },
+					)
+				).json())
 			if (current) {
 				actionMap.set(actionId, data)
 				setApiData(data)

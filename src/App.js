@@ -4,6 +4,7 @@ import "./css/App.css"
 import Action from "./Action"
 import RotationContainer from "./Rotation"
 import ReactDOM from "react-dom"
+import { SPRINT_ACTION_ID } from "./constants"
 
 const handleCodes = new Set(["00", "01", "02", "21", "22", "33"])
 
@@ -81,12 +82,15 @@ export default function App() {
 
 			const action = parseInt(logParameter3, 16)
 
-			if ( //sanity check the tea sis period wig snapped
-				((action < 9 || action > 30000) && //is not a combat action
-                (action < 100001 || action > 100300)) || //and is not a crafting action
-				(logTimestamp === lastTimestamp && action === lastAction) //or this action is a bug/duplicate
-			)
+			const isCombatAction =
+				(action >= 9 && action <= 30000) || action === SPRINT_ACTION_ID
+			const isCraftingAction = action >= 100001 && action <= 100300
+			const isBugOrDuplicate =
+				logTimestamp === lastTimestamp && action === lastAction
+
+			if ((!isCombatAction && !isCraftingAction) || isBugOrDuplicate) {
 				return
+			}
 
 			if (Date.now() - Date.parse(lastTimestamp) > 120000) openNewEncounter() //last action > 120s ago
 
