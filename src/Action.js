@@ -72,7 +72,7 @@ const actionOverrides = new Map([
 
 const actionMap = new Map()
 
-export default function Action({ actionId, additionalClasses }) {
+export default function Action({ actionId, ability, additionalClasses }) {
 	const [apiData, setApiData] = React.useState()
 
 	React.useEffect(() => {
@@ -84,15 +84,15 @@ export default function Action({ actionId, additionalClasses }) {
 
 		let current = true
 		void (async () => {
+			const itemId = getItemId(ability)
+			const url =
+				itemId == null
+					? `https://xivapi.com/Action/${actionId}?columns=Icon,Name,ActionCategoryTargetID`
+					: `https://xivapi.com/Item/${itemId}?columns=Name,Icon,IconHD,IconID`
+
 			const localData = actionOverrides.get(actionId)
-			const data =
-				localData ||
-				(await (
-					await fetch(
-						`https://xivapi.com/Action/${actionId}?columns=Icon,Name,ActionCategoryTargetID`,
-						{ mode: "cors" },
-					)
-				).json())
+			const data = localData || (await (await fetch(url, { mode: "cors" })).json())
+
 			if (current) {
 				actionMap.set(actionId, data)
 				setApiData(data)
@@ -102,7 +102,7 @@ export default function Action({ actionId, additionalClasses }) {
 		return () => {
 			current = false
 		}
-	}, [actionId])
+	}, [actionId, ability])
 
 	if (apiData === undefined || !apiData.Icon) {
 		return null
@@ -120,4 +120,13 @@ export default function Action({ actionId, additionalClasses }) {
 			alt={apiData.Name || ""}
 		/>
 	)
+}
+
+function getItemId(ability) {
+	if (!ability.startsWith("item_")) return null
+
+	const hex = ability.replace("item_", "")
+	const bigId = parseInt(hex, 16)
+	const itemId = bigId > 1000000 ? bigId - 1000000 : bigId
+	return itemId
 }

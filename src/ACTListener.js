@@ -5,6 +5,7 @@ export default function listenToACT(callback) {
 	return listenActWebSocket(callback)
 }
 
+// https://github.com/OverlayPlugin/cactbot/blob/main/docs/LogGuide.md
 function listenActWebSocket(callback) {
 	const wsUri = `${getHost()[1]}/BeforeLogLineRead` || undefined
 	const ws = new WebSocket(wsUri)

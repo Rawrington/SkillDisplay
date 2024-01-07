@@ -51,7 +51,8 @@ export default function App() {
 				logTimestamp,
 				logParameter1,
 				logParameter2,
-				logParameter3
+				logParameter3,
+				ability,
 			] = logSplit
 
 			if (!handleCodes.has(logCode)) return
@@ -87,8 +88,9 @@ export default function App() {
 			const isCraftingAction = action >= 100001 && action <= 100300
 			const isBugOrDuplicate =
 				logTimestamp === lastTimestamp && action === lastAction
+			const isItem = ability.startsWith('item_')
 
-			if ((!isCombatAction && !isCraftingAction) || isBugOrDuplicate) {
+			if ((!isCombatAction && !isCraftingAction && !isItem) || isBugOrDuplicate) {
 				return
 			}
 
@@ -103,7 +105,7 @@ export default function App() {
 			// This is pretty silly but it's the neatest way to handle the updates going
 			// out at the same time, without finding some way to merge the action lists....
 			ReactDOM.unstable_batchedUpdates(() => {
-				setActionList(actionList => actionList.concat({ action, key }))
+				setActionList(actionList => actionList.concat({ action, ability, key }))
 				setEncounterList(encounterList => {
 					if (!encounterList[0]) {
 						encounterList[0] = {
@@ -132,10 +134,11 @@ export default function App() {
 		<>
 			<div className="container">
 				<div className="actions">
-					{actionList.map(({ action, key }) => (
+					{actionList.map(({ action, ability, key }) => (
 						<Action
 							key={key}
 							actionId={action}
+							ability={ability}
 							additionalClasses="action-move"
 						/>
 					))}
