@@ -91,7 +91,8 @@ export default function Action({ actionId, ability, additionalClasses }) {
 					: `https://xivapi.com/Item/${itemId}?columns=Name,Icon,IconHD,IconID`
 
 			const localData = actionOverrides.get(actionId)
-			const data = localData || (await (await fetch(url, { mode: "cors" })).json())
+			const data =
+				localData || (await (await fetch(url, { mode: "cors" })).json())
 
 			if (current) {
 				actionMap.set(actionId, data)
@@ -108,13 +109,16 @@ export default function Action({ actionId, ability, additionalClasses }) {
 		return null
 	}
 
+	const isItem = getIsItem(ability)
+	const isGCD =
+		!isItem &&
+		(gcdOverrides.has(actionId) ||
+			(!ogcdOverrides.has(actionId) && apiData.ActionCategoryTargetID !== 4))
+
 	return (
 		<img
 			className={
-				gcdOverrides.has(actionId) ||
-				(!ogcdOverrides.has(actionId) && apiData.ActionCategoryTargetID !== 4)
-					? `gcd ${additionalClasses}`
-					: `ogcd ${additionalClasses}`
+				isGCD ? `gcd ${additionalClasses}` : `ogcd ${additionalClasses}`
 			}
 			src={`https://xivapi.com/${apiData.Icon}`}
 			alt={apiData.Name || ""}
@@ -122,8 +126,14 @@ export default function Action({ actionId, ability, additionalClasses }) {
 	)
 }
 
+function getIsItem(ability) {
+	const isIt = ability.startsWith("item_")
+	return isIt
+}
+
 function getItemId(ability) {
-	if (!ability.startsWith("item_")) return null
+	const isItem = getIsItem(ability)
+	if (!isItem) return null
 
 	const hex = ability.replace("item_", "")
 	const bigId = parseInt(hex, 16)
